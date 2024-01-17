@@ -56,14 +56,21 @@ function setGameArea(element) {
 
 function setTurn() {
   let badgeTurn = document.getElementById("badgeTurn");
-
+  let favicon = document.getElementById("favicon");
+  let newFavicon = document.createElement("link");
+  newFavicon.setAttribute("id", "favicon");
+  newFavicon.setAttribute("rel", "icon");
+  newFavicon.setAttribute("type", "image/x-icon");
+  
   if (turn == 1) {
+    newFavicon.setAttribute("href", "icon-x.ico");
     badgeTurn.innerHTML = `
     <svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M23.9775 18.3769L17.5995 11.9994L23.9754 5.6225C24.0382 5.55969 24.0881 5.48512 24.1221 5.40305C24.156 5.32099 24.1735 5.23303 24.1735 5.1442C24.1735 5.05537 24.156 4.96741 24.1221 4.88534C24.0881 4.80328 24.0382 4.72871 23.9754 4.6659L19.5089 0.19816C19.3819 0.0712787 19.2098 0 19.0304 0C18.8509 0 18.6788 0.0712787 18.5519 0.19816L12.175 6.57501L5.79902 0.19816C5.54535 -0.0558672 5.09614 -0.0558672 4.84212 0.19816L0.374533 4.66522C0.247823 4.79222 0.176661 4.96429 0.176661 5.14369C0.176661 5.32309 0.247823 5.49516 0.374533 5.62216L6.7515 11.9994L0.373512 18.3772C0.246885 18.5043 0.175781 18.6763 0.175781 18.8557C0.175781 19.0351 0.246885 19.2071 0.373512 19.3342L4.84042 23.8016C4.90321 23.8645 4.97779 23.9144 5.05989 23.9484C5.14198 23.9825 5.22999 24 5.31887 24C5.40775 24 5.49576 23.9825 5.57786 23.9484C5.65995 23.9144 5.73453 23.8645 5.79732 23.8016L12.175 17.4237L18.553 23.8012C18.6852 23.9332 18.8577 23.9995 19.0314 23.9995C19.2052 23.9995 19.3779 23.9332 19.5102 23.8012L23.9778 19.3338C24.1046 19.2069 24.1758 19.0347 24.1758 18.8553C24.1757 18.6758 24.1044 18.5037 23.9775 18.3769Z"/>
     </svg>
-    <h3>TURNO</h3>`;
+    <h3>TURNO</h3>`;    
   } else {
+    newFavicon.setAttribute("href", "icon-o.ico");
     badgeTurn.innerHTML = `
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 20.5C10.4583 20.5 9.03646 20.1198 7.73438 19.3594C6.43229 18.599 5.40104 17.5677 4.64062 16.2656C3.88021 14.9635 3.5 13.5417 3.5 12C3.5 10.4583 3.88021 9.03646 4.64062 7.73438C5.40104 6.43229 6.43229 5.40104 7.73438 4.64062C9.03646 3.88021 10.4583 3.5 12 3.5C13.5417 3.5 14.9635 3.88021 16.2656 4.64062C17.5677 5.40104 18.599 6.43229 19.3594 7.73438C20.1198 9.03646 20.5 10.4583 20.5 12C20.5 13.5417 20.1198 14.9635 19.3594 16.2656C18.599 17.5677 17.5677 18.599 16.2656 19.3594C14.9635 20.1198 13.5417 20.5 12 20.5ZM24 12C24 9.82292 23.4635 7.8151 22.3906 5.97656C21.3177 4.13802 19.862 2.68229 18.0234 1.60938C16.1849 0.536458 14.1771 0 12 0C9.82292 0 7.8151 0.536458 5.97656 1.60938C4.13802 2.68229 2.68229 4.13802 1.60938 5.97656C0.536458 7.8151 0 9.82292 0 12C0 14.1771 0.536458 16.1849 1.60938 18.0234C2.68229 19.862 4.13802 21.3177 5.97656 22.3906C7.8151 23.4635 9.82292 24 12 24C14.1771 24 16.1849 23.4635 18.0234 22.3906C19.862 21.3177 21.3177 19.862 22.3906 18.0234C23.4635 16.1849 24 14.1771 24 12Z"/>
@@ -73,6 +80,7 @@ function setTurn() {
     <h3>TURNO</h3>
     `;
   }
+  document.head.replaceChild(newFavicon, favicon);
 }
 
 function setMirror(player, position) {
@@ -82,10 +90,12 @@ function setMirror(player, position) {
 
   if (checkWin(player)) {
     setPoints(player);
-    cleanGameArea();
+    // cleanGameArea();
+    actionModalWinner();
   } else if (checkDraw()) {
     setPoints(3);
-    cleanGameArea();
+    // cleanGameArea();
+    actionModalWinner();
   }
 }
 
@@ -204,3 +214,29 @@ function setPoints(panel) {
       break;
   }
 }
+
+function actionModalWinner(){
+  let modal = document.getElementById("modalWinner");  
+  let section = document.getElementById("sectionModal");
+  if(modal.open == false){
+    modal.show();
+    section.style.animation = ""; 
+  } else {             
+    section.style.animation = "move-out 600ms cubic-bezier(.73,-0.24,.18,1.28) forwards"; 
+        
+    setTimeout(() => {
+      modal.close();      
+    }, 600);
+
+    cleanGameArea();
+  }
+}
+
+
+document.addEventListener("visibilitychange", function() {
+  if (document.visibilityState === 'visible') {
+    document.title = 'TIC-TAC TOE';
+  } else {
+    document.title = 'Cadê você?';
+  }
+});
