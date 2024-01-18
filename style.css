@@ -29,6 +29,8 @@ body{
     width: 100vw;
     border: none;
     background-color: var(--color-black-90);    
+    opacity: 1;
+    transition: 600ms;
     z-index: 999;    
 }
 
@@ -55,14 +57,13 @@ body{
 
 .modal-winner .modal-content button{
     all: unset;
-    background-color: var(--color-light-orange);
+    background-color: var(--color-light-gray);
     padding: 10px 20px;
     border-radius: 10px; 
     box-shadow: var(--shadow-primary);
     font-size: 1rem;
     font-weight: 700;
-    cursor: pointer;
-    
+    cursor: pointer;    
     color: var(--color-dark-gray);
 }
 .modal-winner .modal-content .modal-text{
@@ -74,7 +75,7 @@ body{
 .modal-winner .modal-content .modal-text h2{
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--color-light-blue);
+    color: var(--color-light-gray);
     letter-spacing: 2px;
 }
 
@@ -100,12 +101,16 @@ body{
 }
 
 
-.panel .body .players .player-x, .player-x{
+.panel .body .players .player-x, 
+.game-area .player-x, 
+.modal-text .player-x{
     fill: var(--color-light-blue);
 }
 
 
-.panel .body .players .player-o, .player-o{
+.panel .body .players .player-o, 
+.game-area .player-o, 
+.modal-text .player-o{
     fill: var(--color-light-orange);
 }
 
