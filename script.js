@@ -10,19 +10,19 @@ const xIcon = `<svg class="player-x" viewBox="0 0 25 24" fill="none" xmlns="http
 <path d="M23.9775 18.3769L17.5995 11.9994L23.9754 5.6225C24.0382 5.55969 24.0881 5.48512 24.1221 5.40305C24.156 5.32099 24.1735 5.23303 24.1735 5.1442C24.1735 5.05537 24.156 4.96741 24.1221 4.88534C24.0881 4.80328 24.0382 4.72871 23.9754 4.6659L19.5089 0.19816C19.3819 0.0712787 19.2098 0 19.0304 0C18.8509 0 18.6788 0.0712787 18.5519 0.19816L12.175 6.57501L5.79902 0.19816C5.54535 -0.0558672 5.09614 -0.0558672 4.84212 0.19816L0.374533 4.66522C0.247823 4.79222 0.176661 4.96429 0.176661 5.14369C0.176661 5.32309 0.247823 5.49516 0.374533 5.62216L6.7515 11.9994L0.373512 18.3772C0.246885 18.5043 0.175781 18.6763 0.175781 18.8557C0.175781 19.0351 0.246885 19.2071 0.373512 19.3342L4.84042 23.8016C4.90321 23.8645 4.97779 23.9144 5.05989 23.9484C5.14198 23.9825 5.22999 24 5.31887 24C5.40775 24 5.49576 23.9825 5.57786 23.9484C5.65995 23.9144 5.73453 23.8645 5.79732 23.8016L12.175 17.4237L18.553 23.8012C18.6852 23.9332 18.8577 23.9995 19.0314 23.9995C19.2052 23.9995 19.3779 23.9332 19.5102 23.8012L23.9778 19.3338C24.1046 19.2069 24.1758 19.0347 24.1758 18.8553C24.1757 18.6758 24.1044 18.5037 23.9775 18.3769Z"/>
 </svg>`;
 
-const elementPointsPlayer1 = document
-  .getElementById("pointsPlayer1")
+const elementPointsPlayerX = document
+  .getElementById("pointsPlayerX")
   .querySelector("h3");
-const elementPointsPlayer2 = document
-  .getElementById("pointsPlayer2")
+const elementPointsPlayerO = document
+  .getElementById("pointsPlayerO")
   .querySelector("h3");
 const elementPointsDraw = document.getElementById("draws").querySelector("h3");
 
-var pointsPlayer1 = 0;
-var pointsPlayer2 = 0;
+var pointsPlayerX = 0;
+var pointsPlayerO = 0;
 var pointsDraw = 0;
 
-var turn = 1; // 1 = x / 2 = O
+var turn = "x"; // 1 = x / 2 = O
 
 var GameMirror = [
   [null, null, null],
@@ -37,20 +37,17 @@ function setGameArea(element) {
     console.log("Já tem um elemento aqui");
   } else {
     switch (turn) {
-      case 1:
+      case "x":
         element.innerHTML = xIcon;
-        setMirror(1, element.getAttribute("data-position"));
-        turn = 2;
-        setTurn();
         break;
 
-      case 2:
+      case "o":
         element.innerHTML = circleIcon;
-        setMirror(2, element.getAttribute("data-position"));
-        turn = 1;
-        setTurn();
         break;
     }
+
+    setMirror(turn, element.getAttribute("data-position"));
+    setTurn();
   }
 }
 
@@ -61,15 +58,17 @@ function setTurn() {
   newFavicon.setAttribute("id", "favicon");
   newFavicon.setAttribute("rel", "icon");
   newFavicon.setAttribute("type", "image/x-icon");
-  
-  if (turn == 1) {
+
+  if (turn === "o") {
+    turn = "x";
     newFavicon.setAttribute("href", "icon-x.ico");
     badgeTurn.innerHTML = `
     <svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M23.9775 18.3769L17.5995 11.9994L23.9754 5.6225C24.0382 5.55969 24.0881 5.48512 24.1221 5.40305C24.156 5.32099 24.1735 5.23303 24.1735 5.1442C24.1735 5.05537 24.156 4.96741 24.1221 4.88534C24.0881 4.80328 24.0382 4.72871 23.9754 4.6659L19.5089 0.19816C19.3819 0.0712787 19.2098 0 19.0304 0C18.8509 0 18.6788 0.0712787 18.5519 0.19816L12.175 6.57501L5.79902 0.19816C5.54535 -0.0558672 5.09614 -0.0558672 4.84212 0.19816L0.374533 4.66522C0.247823 4.79222 0.176661 4.96429 0.176661 5.14369C0.176661 5.32309 0.247823 5.49516 0.374533 5.62216L6.7515 11.9994L0.373512 18.3772C0.246885 18.5043 0.175781 18.6763 0.175781 18.8557C0.175781 19.0351 0.246885 19.2071 0.373512 19.3342L4.84042 23.8016C4.90321 23.8645 4.97779 23.9144 5.05989 23.9484C5.14198 23.9825 5.22999 24 5.31887 24C5.40775 24 5.49576 23.9825 5.57786 23.9484C5.65995 23.9144 5.73453 23.8645 5.79732 23.8016L12.175 17.4237L18.553 23.8012C18.6852 23.9332 18.8577 23.9995 19.0314 23.9995C19.2052 23.9995 19.3779 23.9332 19.5102 23.8012L23.9778 19.3338C24.1046 19.2069 24.1758 19.0347 24.1758 18.8553C24.1757 18.6758 24.1044 18.5037 23.9775 18.3769Z"/>
     </svg>
-    <h3>TURNO</h3>`;    
+    <h3>TURNO</h3>`;
   } else {
+    turn = "o";
     newFavicon.setAttribute("href", "icon-o.ico");
     badgeTurn.innerHTML = `
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,11 +89,9 @@ function setMirror(player, position) {
 
   if (checkWin(player)) {
     setPoints(player);
-    // cleanGameArea();
     actionModalWinner();
   } else if (checkDraw()) {
-    setPoints(3);
-    // cleanGameArea();
+    setPoints("draw");
     actionModalWinner();
   }
 }
@@ -155,16 +152,18 @@ function checkDraw() {
 }
 
 function cleanGameArea() {
-  turn = 1;
   var gameArea = document.querySelectorAll(".game-area");
 
-  setTurn();
+  if (turn === "o") {
+    setTurn();
+  }
 
   gameArea.forEach((element) => {
     let svg = element.querySelector("svg");
 
     if (svg) {
-      svg.style.animation = "scale-out 300ms cubic-bezier(1,-0.65,.62,.8) forwards";
+      svg.style.animation =
+        "scale-out 300ms cubic-bezier(1,-0.65,.62,.8) forwards";
     }
     setTimeout(() => {
       element.innerHTML = "";
@@ -178,65 +177,74 @@ function cleanGameArea() {
   ];
 }
 
-function setPoints(panel) {
-  switch (panel) {
-    case 1:
-      pointsPlayer1++;
-      elementPointsPlayer1.innerHTML = pointsPlayer1;
-      jsConfetti
-        .addConfetti({
-          confettiColors: ["#00c2c0"],
-          confettiRadius: 4,
-          confettiNumber: 200,
-        })
+function setPoints(winner) {
+  switch (winner) {
+    case "x":
+      pointsPlayerX++;
+      elementPointsPlayerX.innerHTML = pointsPlayerX;
+      jsConfetti.addConfetti({
+        confettiColors: ["#00c2c0"],
+        confettiRadius: 4,
+        confettiNumber: 200,
+      });
       break;
-    case 2:
-      pointsPlayer2++;
-      elementPointsPlayer2.innerHTML = pointsPlayer2;
-      jsConfetti
-        .addConfetti({
-          confettiColors: ["#f4b348"],
-          confettiRadius: 4,
-          confettiNumber: 200,
-        })
+    case "o":
+      pointsPlayerO++;
+      elementPointsPlayerO.innerHTML = pointsPlayerO;
+      jsConfetti.addConfetti({
+        confettiColors: ["#f4b348"],
+        confettiRadius: 4,
+        confettiNumber: 200,
+      });
 
       break;
-    case 3:
+    case "draw":
       pointsDraw++;
       elementPointsDraw.innerHTML = pointsDraw;
-      jsConfetti
-        .addConfetti({
-          confettiColors: ["#a7bec8"],
-          confettiRadius: 4,
-          confettiNumber: 200,
-        })   
+      jsConfetti.addConfetti({
+        confettiColors: ["#a7bec8"],
+        confettiRadius: 4,
+        confettiNumber: 200,
+      });
 
       break;
   }
 }
 
-function actionModalWinner(){
-  let modal = document.getElementById("modalWinner");  
+function actionModalWinner() {
+  let modal = document.getElementById("modalWinner");
   let section = document.getElementById("sectionModal");
-  if(modal.open == false){
+  let button = section.querySelector("button");  
+
+  if (modal.open == false) {
     modal.show();
-    section.style.animation = ""; 
-  } else {             
-    section.style.animation = "move-out 600ms cubic-bezier(.73,-0.24,.18,1.28) forwards"; 
-        
+    section.style.animation = "";        
+    
+    if (turn === "x") {
+      button.style.backgroundColor = "#00c2c0";
+      modal.querySelector(".modal-text").innerHTML = xIcon;
+    } else {
+      button.style.backgroundColor = "#f4b348";
+      modal.querySelector(".modal-text").innerHTML = circleIcon;
+    }
+    
+    modal.querySelector("h2").innerHTML = `VITÓRIA`;
+  } else {
+    section.style.animation =
+      "move-out 600ms cubic-bezier(.73,-0.24,.18,1.28) forwards";
+
     setTimeout(() => {
-      modal.close();      
+      modal.close();
     }, 600);
 
     cleanGameArea();
   }
 }
 
-
-document.addEventListener("visibilitychange", function() {
-  if (document.visibilityState === 'visible') {
-    document.title = 'TIC-TAC TOE';
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "visible") {
+    document.title = "TIC-TAC TOE";
   } else {
-    document.title = 'Cadê você?';
+    document.title = "Cadê você?";
   }
 });
