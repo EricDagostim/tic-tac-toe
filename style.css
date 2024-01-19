@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 :root{
-    --color-side-x: #00c2c0;
-    --color-side-o: #f4b348;
+    --color-light-blue: #00c2c0;
+    --color-light-orange: #f4b348;
     --color-light-gray: #a7bec8;
     --color-dark-gray : #1e353f;
     --color-dark: #182a32;
@@ -29,6 +29,8 @@ body{
     width: 100vw;
     border: none;
     background-color: var(--color-black-90);    
+    opacity: 1;
+    transition: 600ms;
     z-index: 999;    
 }
 
@@ -38,9 +40,8 @@ body{
     justify-content: center;    
     position: fixed;
     width: 100vw;    
-    height: 100vh;        
-    animation: move-in 600ms cubic-bezier(.73,-0.24,.18,1.28) forwards; 
-
+    height: 100vh;            
+    animation: move-in 400ms cubic-bezier(.73,-0.24,.18,1.28) forwards;     
 }
 
 
@@ -56,14 +57,13 @@ body{
 
 .modal-winner .modal-content button{
     all: unset;
-    background-color: var(--color-side-o);
+    background-color: var(--color-light-gray);
     padding: 10px 20px;
     border-radius: 10px; 
     box-shadow: var(--shadow-primary);
     font-size: 1rem;
     font-weight: 700;
-    cursor: pointer;
-    
+    cursor: pointer;    
     color: var(--color-dark-gray);
 }
 .modal-winner .modal-content .modal-text{
@@ -75,7 +75,7 @@ body{
 .modal-winner .modal-content .modal-text h2{
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--color-side-x);
+    color: var(--color-light-gray);
     letter-spacing: 2px;
 }
 
@@ -101,13 +101,17 @@ body{
 }
 
 
-.panel .body .players .player-x, .player-x{
-    fill: var(--color-side-x);
+.panel .body .players .player-x, 
+.game-area .player-x, 
+.modal-text .player-x{
+    fill: var(--color-light-blue);
 }
 
 
-.panel .body .players .player-o, .player-o{
-    fill: var(--color-side-o);
+.panel .body .players .player-o, 
+.game-area .player-o, 
+.modal-text .player-o{
+    fill: var(--color-light-orange);
 }
 
 .panel .body .badge-turn{
@@ -213,11 +217,11 @@ body{
     color: var(--color-dark-gray);
 }
 
-.footer #pointsPlayer1{
-    background-color: var(--color-side-x);
+.footer #pointsPlayerX{
+    background-color: var(--color-light-blue);
 }
-.footer #pointsPlayer2{
-    background-color: var(--color-side-o);
+.footer #pointsPlayerO{
+    background-color: var(--color-light-orange);
 }
 .footer #draws{
     background-color: var(--color-light-gray);
